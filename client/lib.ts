@@ -1,0 +1,1 @@
+export const BACKEND_URL = "https://youse-ai-todo-app-server.vercel.app"

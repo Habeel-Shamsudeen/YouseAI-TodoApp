@@ -54,3 +54,27 @@ export const loginUser = async (email: string, password: string) => {
 
   return bearerToken;
 };
+
+export const getUserData = async (userId: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    include: {
+      tasks: true,
+      _count: false, // Optional: If you don't want counts
+    },
+  });
+
+  if (user) {
+    return {
+      email: user.email,
+      name: user.name,
+      tasks: user.tasks,
+    };
+  }
+
+  return null; // Return null if the user is not found
+};
+
+

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { loginSchema, signUpSchema } from "../models/validationSchemas";
-import { loginUser, registerUser } from "../services/authServices";
+import { getUserData, loginUser, registerUser } from "../services/authServices";
 import { User } from "../models/types";
 
 export const signup = async (
@@ -50,5 +50,17 @@ export const login = async (
       .json({ message: "User logged in successfully", token: token });
   } catch (error) {
     next(error);
+  }
+};
+
+export const session = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = await getUserData(req.body.userId);
+    res.json({
+      user,
+      valid: true
+    })
+  } catch (error) {
+    next(error)
   }
 };
