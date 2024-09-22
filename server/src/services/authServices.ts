@@ -68,6 +68,7 @@ export const getUserData = async (userId: string) => {
 
   if (user) {
     return {
+      id:user.id,
       email: user.email,
       name: user.name,
       tasks: user.tasks,

@@ -38,7 +38,7 @@ export default function SignupForm() {
           description: "You are now logged in!",
         });
 
-        router.push("/todos");
+        router.push("/todo");
       } else {
         toast({
           title: "Invalid Credentials",
@@ -114,7 +114,7 @@ export default function SignupForm() {
         </form>
         <div className="text-slate-500 text-center">
           Already have an account
-          <Link className="pl-1 underline" href={"/login"}>
+          <Link className="pl-1 underline" href={"/"}>
             Login
           </Link>
         </div>

@@ -5,10 +5,10 @@ export default function Quote() {
     <div className="hidden md:flex flex-col justify-center items-start h-full bg-slate-100 w-full p-8 shadow-lg">
       <div className="mb-8 w-full flex justify-center">
         <Image
-          src="/repair1.jpg"
+          src="/TodoImage.jpg"
           alt="Inspirational image"
-          width={400}
-          height={300}
+          width={500}
+          height={450}
           className="rounded-lg shadow-md"
         />
       </div>

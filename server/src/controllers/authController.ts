@@ -57,10 +57,20 @@ export const session = async (req: Request, res: Response, next: NextFunction) =
   try {
     const user = await getUserData(req.body.userId);
     res.json({
-      user,
+      user:{
+        id:user?.id,
+        email:user?.email,
+        name:user?.name
+      },
+      tasks:user?.tasks,
       valid: true
     })
   } catch (error) {
     next(error)
   }
 };
+
+export const logout = (req:Request, res:Response) => {
+  res.clearCookie('token', { path: '/' });
+  res.status(200).json({ message: 'Logged out successfully' });
+}

@@ -4,11 +4,12 @@ import Quote from "@/components/Quote";
 import Link from "next/link";
 import useSession from "@/hooks/useSession";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function Home() {
-    const router = useRouter()
+export default function SigninHome() {
+  const router = useRouter()
     const session = useSession();
-    if(session){
+    if(session.user){
         router.push('/todo');
     }
   return (

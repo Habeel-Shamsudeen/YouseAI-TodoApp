@@ -38,7 +38,7 @@ export default function SigninForm() {
           description: "You are now logged in!",
         });
 
-        router.push("/todos");
+        router.push("/todo");
       } else {
         toast({
           title: "Invalid Credentials",

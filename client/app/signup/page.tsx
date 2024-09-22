@@ -1,15 +1,14 @@
 'use client'
-import SigninForm from "@/components/signin-form";
 import Quote from "@/components/Quote";
 import Link from "next/link";
 import useSession from "@/hooks/useSession";
 import { useRouter } from "next/navigation";
 import SignupForm from "@/components/signup-form";
 
-export default function Home() {
-    const router = useRouter()
+export default function SignupHome() {
+  const router = useRouter()
     const session = useSession();
-    if(session){
+    if(session.user){
         router.push('/todo');
     }
   return (
@@ -17,7 +16,7 @@ export default function Home() {
       <div className="flex">
       <div className="flex items-center gap-2 p-3 md:bg-slate-100 w-1/2 md:shadow-lg">
         <Link
-          href="/#home"
+          href="/"
           className="flex items-center gap-2 "
           prefetch={false}
         >

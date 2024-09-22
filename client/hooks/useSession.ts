@@ -1,52 +1,60 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useRecoilState } from "recoil";
-import { userState } from "@/recoil/atoms";
+import { taskState, userState } from "@/recoil/atoms";
 import axios from "axios";
 import { BACKEND_URL } from "@/lib";
 
-// Helper function to get token from cookies
+// Helper to extract token from cookies
 const getTokenFromCookies = () => {
   return document.cookie.split('; ').reduce((acc, cookie) => {
     const [name, value] = cookie.split('=');
-    if (name === "token") acc = value.split('%')[1];
-    return acc;
+    return name === "token" ? value : acc; // Return the token if found
   }, "");
 };
 
 const useSession = () => {
+  const router = useRouter();
   const [user, setUser] = useRecoilState(userState);
+  const [tasks, setTask] = useRecoilState(taskState);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkSession = async () => {
       const token = getTokenFromCookies();
       if (!token) {
-        setUser(null); // No token, clear user state
+        setUser(null);
+        setTask([]);
+        setLoading(false);
         return;
       }
 
       try {
-        // Call the Express backend route for session validation
         const response = await axios.get(`${BACKEND_URL}/api/auth/session`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         });
 
         if (response.data.valid) {
-          setUser(response.data.user); // Set user data in Recoil
+          setUser(response.data.user);
+          setTask(response.data.tasks);
         } else {
-          setUser(null); // If session invalid, clear user
+          setUser(null);
+          setTask([]);
         }
       } catch (error) {
         console.error("Session check failed", error);
-        setUser(null); // On error, clear user
+        setUser(null);
+        setTask([]);
+        router.push("/login");
+      } finally {
+        setLoading(false);
       }
     };
 
     checkSession();
-  }, [setUser]);
+  }, [setUser, setTask]); 
 
-  return user;
+  return { user, tasks, loading };
 };
 
 export default useSession;
