@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId // Unique identifier for the user
+  name      String
+  email     String   @unique
+  password  String 
+  tasks     Task[]   // Relation to Task model (one-to-many)
+}
+
+model Task {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId // Unique identifier for the Task
+  title       String   
+  description String? 
+  status      Status   @default(TO_DO)
+  priority    Priority @default(LOW)
+  dueDate     DateTime? 
+  userId      String   @db.ObjectId // Foreign Key
+  user        User     @relation(fields: [userId], references: [id]) // Relation with the User model
+}
+
+enum Status {
+  TO_DO        
+  IN_PROGRESS 
+  COMPLETED  
+}
+
+enum Priority {
+  LOW    
+  MEDIUM 
+  HIGH    
+}
