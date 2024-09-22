@@ -8,9 +8,8 @@ export const createTask = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { title, description, status, priority, dueDate } = req.body;
+  const { title, description, status, priority, dueDate } = req.body.taskData;
   const userId: string = req.body.userId;
-
   try {
     const newTask = await taskService.createTask(
       title,
@@ -55,7 +54,7 @@ export const updateTask = async (
     next: NextFunction
   ) => {
     const { id } = req.params; // Get task ID from route parameters
-    const { title, description, status, priority, dueDate } = req.body;
+    const { title, description, status, priority, dueDate } = req.body.editedTask;
     const userId: string = req.body.userId; // Get user ID from the request body
   
     try {

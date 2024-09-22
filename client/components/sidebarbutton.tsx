@@ -25,7 +25,7 @@ export default function SidebarButton() {
             </Link>
             {options.map((item) => (
               <Link
-                href={`/${item}`}
+                href={`/${item.toLowerCase()}`}
                 className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                 prefetch={false}
                 key={item}

@@ -41,7 +41,11 @@ function TaskCard(task: Task) {
   const handleSave = async () => {
     try {
       console.log(editedTask);
-      const response = await axios.put(`/api/tasks/${editedTask.id}`, editedTask);
+      const response = await axios.put(`/api/tasks/${editedTask.id}`,{
+        editedTask
+      },{
+        withCredentials:true
+      });
       setTasks((prev) =>
         prev.map((task) =>
           task.id === response.data.updatedTask.id ? response.data.updatedTask : task

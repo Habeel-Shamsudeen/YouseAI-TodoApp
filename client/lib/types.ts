@@ -5,13 +5,13 @@ export interface User {
   }
   
   export interface Task {
-    id: string;
+    id?: string;
     title: string;
     description?: string;
     status: Status;
     priority: Priority;
     dueDate?: Date;
-    userId: string;
+    userId?: string;
     user?: User;
   }
   

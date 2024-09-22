@@ -16,6 +16,7 @@ import { User } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
 import { BACKEND_URL } from "@/lib";
 import axios from "axios";
+import { AddTaskComponent } from "./add-task";
 
 export default function Appbar({ user }: { user: User }) {
   const resetUser = useResetRecoilState(userState);
@@ -48,7 +49,7 @@ export default function Appbar({ user }: { user: User }) {
   };
 
   return (
-    <header className="bg-background border-b px-4 py-4 flex items-center justify-between shrink-0 md:px-6 md:py-4">
+    <header className="bg-background border-b px-4 py-4 flex items-center justify-between shrink-0 md:px-6 md:py-4 shadow-sm bg-black text-slate-50">
       <div className="flex items-center gap-4">
         <Link
           href={`/todo`}
@@ -68,7 +69,7 @@ export default function Appbar({ user }: { user: User }) {
           </Link>
         </div>
       </div>
-      <div className=" gap-5 hidden md:flex">
+      <div className=" gap-5 hidden md:flex ml-32">
         <Link href={'/todo'}>
         <span className="text-md font-normal hover:text-slate-500">TodoList</span>
         </Link>
@@ -76,9 +77,13 @@ export default function Appbar({ user }: { user: User }) {
         <span className="text-md font-normal hover:text-slate-500">KanbanBoard</span>
         </Link>
       </div>
+      
       <div className="flex gap-1">
+      <div className="flex  flex-col justify-center align-middle items-center">
+      <AddTaskComponent/>
+      </div>
         <span className="flex items-center mx-3 text-md font-medium">
-          Welcome {userName.toUpperCase()}
+         {userName.toUpperCase()}
         </span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
