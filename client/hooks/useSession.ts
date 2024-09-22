@@ -8,7 +8,7 @@ import { BACKEND_URL } from "@/lib";
 const getTokenFromCookies = () => {
   return document.cookie.split('; ').reduce((acc, cookie) => {
     const [name, value] = cookie.split('=');
-    if (name === "token") acc = value;
+    if (name === "token") acc = value.split('%')[1];
     return acc;
   }, "");
 };

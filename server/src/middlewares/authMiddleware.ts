@@ -16,11 +16,11 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     const cookies = cookie.parse(req.headers.cookie);
     const brererToken = cookies.token;
 
-    if (!brererToken || !brererToken.startsWith("Bearer ")) {
+    if (!brererToken || !brererToken.startsWith("Bearer")) {
       return res.status(401).json({ message: 'Authentication token not found' });
     }
 
-    const token = brererToken.split(" ")[1];
+    const token = brererToken.split("%")[1];
 
     // Verify the token using JWT
     const decoded : DecodedToken = verifyToken(token)
