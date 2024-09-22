@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { loginSchema, signUpSchema } from "../models/validationSchemas";
 import { loginUser, registerUser } from "../services/authServices";
 import { User } from "../models/types";
-import { generateToken } from "../utils/jwtUtil";
 
 export const signup = async (
   req: Request,
