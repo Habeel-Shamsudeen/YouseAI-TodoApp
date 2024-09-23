@@ -11,7 +11,7 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:3000", // Replace with your frontend URL
+    origin: process.env.FRONTEND_URL || "https://habeelstodoapp.vercel.app", // Replace with your frontend URL ideally should be an env
     credentials: true, // Allow cookies to be sent
   })
 ); // Enable CORS
