@@ -1,6 +1,6 @@
 import { selector } from "recoil";
 import { taskState, searchTermState, filterStatusState, filterPriorityState, sortByState, sortDirectionState } from "../atoms";
-import { Priority, Status, Task } from "@/lib/types";
+import { Status, Task } from "@/lib/types";
 
 export const filteredAndSortedTasksState = selector({
   key: "filteredAndSortedTasksState",

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useRecoilState } from "recoil";
 import { taskState, userState } from "@/recoil/atoms";
 import axios from "axios";
@@ -14,7 +13,6 @@ const getTokenFromCookies = () => {
 };
 
 const useSession = () => {
-  const router = useRouter();
   const [user, setUser] = useRecoilState(userState);
   const [tasks, setTask] = useRecoilState(taskState);
   const [loading, setLoading] = useState(true);
