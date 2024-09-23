@@ -27,7 +27,7 @@ import { taskState } from "@/recoil/atoms";
 import { Priority, Status, Task } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
-import { BACKEND_URL } from "@/lib";
+import { BACKEND_URL } from "@/lib/config";
 
 export function AddTaskComponent() {
   // State for Task attributes
@@ -132,7 +132,7 @@ export function AddTaskComponent() {
               <SelectContent>
                 <SelectItem value="TO_DO">To Do</SelectItem>
                 <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
-                <SelectItem value="DONE">Done</SelectItem>
+                <SelectItem value="COMPLETED">Completed</SelectItem>
               </SelectContent>
             </Select>
           </div>

@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { BACKEND_URL } from "@/lib";
+import { BACKEND_URL } from "@/lib/config";
 
 export default function SigninForm() {
   const { toast } = useToast();

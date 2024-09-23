@@ -11,30 +11,50 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import SidebarButton from "./sidebarbutton";
 import { ClipboardListIcon, LogOutIcon } from "./ui/Icons";
 import { useResetRecoilState } from "recoil";
-import { taskState, userState } from "@/recoil/atoms";
+import {
+  userState,
+  taskState,
+  searchTermState,
+  filterStatusState,
+  filterPriorityState,
+  sortByState,
+  sortDirectionState,
+} from "@/recoil/atoms";
 import { User } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
-import { BACKEND_URL } from "@/lib";
+import { BACKEND_URL } from "@/lib/config";
 import axios from "axios";
-import { AddTaskComponent } from "./add-task";
 
 export default function Appbar({ user }: { user: User }) {
+  // Reset Recoil states
   const resetUser = useResetRecoilState(userState);
   const resetTask = useResetRecoilState(taskState);
+  const resetSearchTerm = useResetRecoilState(searchTermState);
+  const resetFilterStatus = useResetRecoilState(filterStatusState);
+  const resetFilterPriority = useResetRecoilState(filterPriorityState);
+  const resetSortBy = useResetRecoilState(sortByState);
+  const resetSortDirection = useResetRecoilState(sortDirectionState);
+
+  // hook to show toast notification
   const { toast } = useToast();
   let userName = user.name;
   const handleSignOut = async () => {
     try {
-      // Call the API to log out basically removes the cookie (token)
+      // Call the API to log out-> basically removes the cookie (token)
       await axios.post(
         `${BACKEND_URL}/api/auth/logout`,
         {},
-        { withCredentials: true }
+        { withCredentials: true } // send cookies with request
       );
 
       // Reset states in Recoil
       resetUser();
       resetTask();
+      resetSearchTerm();
+      resetFilterStatus();
+      resetFilterPriority();
+      resetSortBy();
+      resetSortDirection();
 
       // Show toast message
       toast({
@@ -69,21 +89,25 @@ export default function Appbar({ user }: { user: User }) {
           </Link>
         </div>
       </div>
-      <div className=" gap-5 hidden md:flex ml-32">
-        <Link href={'/todo'}>
-        <span className="text-md font-normal hover:text-slate-500">TodoList</span>
+      <div className=" gap-5 hidden md:flex ml-22">
+        <Link href={"/todo"}>
+          <span className="text-md font-normal hover:text-slate-500">
+            TodoList
+          </span>
         </Link>
-        <Link href={'/kanban'}>
-        <span className="text-md font-normal hover:text-slate-500">KanbanBoard</span>
+        <Link href={"/kanban"}>
+          <span className="text-md font-normal hover:text-slate-500">
+            KanbanBoard
+          </span>
         </Link>
       </div>
-      
+
       <div className="flex gap-1">
-      <div className="flex  flex-col justify-center align-middle items-center">
+        {/* <div className="flex  flex-col justify-center align-middle items-center">
       <AddTaskComponent/>
-      </div>
+      </div> */}
         <span className="flex items-center mx-3 text-md font-medium">
-         {userName.toUpperCase()}
+          {userName.toUpperCase()}
         </span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

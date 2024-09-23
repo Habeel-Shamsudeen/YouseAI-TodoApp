@@ -54,7 +54,7 @@ export const updateTask = async (
     next: NextFunction
   ) => {
     const { id } = req.params; // Get task ID from route parameters
-    const { title, description, status, priority, dueDate } = req.body.editedTask;
+    const { title, description, status, priority, dueDate } = req.body;
     const userId: string = req.body.userId; // Get user ID from the request body
   
     try {

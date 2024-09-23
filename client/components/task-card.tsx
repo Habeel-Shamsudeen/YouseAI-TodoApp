@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import {
   Card,
@@ -25,8 +24,10 @@ import { useSetRecoilState } from "recoil";
 import { taskState } from "@/recoil/atoms";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
+import { Checkbox } from "./ui/checkbox";
+import { BACKEND_URL } from "@/lib/config";
 
-function TaskCard(task: Task) {
+export default function TaskCard({task}:{task:Task}) {
   const {toast} = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
@@ -38,12 +39,9 @@ function TaskCard(task: Task) {
     setEditedTask(task);
   };
 
-  const handleSave = async () => {
+  const handleSave = async (editedTask:Task) => {
     try {
-      console.log(editedTask);
-      const response = await axios.put(`/api/tasks/${editedTask.id}`,{
-        editedTask
-      },{
+      const response = await axios.put(`${BACKEND_URL}/api/tasks/${editedTask.id}`,editedTask,{
         withCredentials:true
       });
       setTasks((prev) =>
@@ -66,7 +64,9 @@ function TaskCard(task: Task) {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/api/tasks/${task.id}`);
+      await axios.delete(`${BACKEND_URL}/api/tasks/${task.id}`,{
+        withCredentials:true
+      });
       setTasks((prev) => prev.filter((stateTask) => stateTask.id !== task.id));
       toast({
         title: "Task deleted",
@@ -80,6 +80,12 @@ function TaskCard(task: Task) {
     }
   };
 
+  const handleStatusChange = (checked: boolean) => {
+    const newStatus: Status = checked ? 'COMPLETED' as Status : 'TO_DO' as Status
+    handleChange('status', newStatus)
+    handleSave({ ...task, status: newStatus })
+  }
+
   const handleChange = (field: keyof Task, value: string | Date) => {
     setEditedTask((prev) => ({ ...prev, [field]: value }));
   };
@@ -88,16 +94,22 @@ function TaskCard(task: Task) {
     <Card className="w-full max-w-md">
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
-          {isEditing ? (
-            <Input
-              value={editedTask.title}
-              onChange={(e) => handleChange("title", e.target.value)}
-              className="font-bold"
-              placeholder="Task Title"
+        <div className="flex items-center space-x-2">
+            <Checkbox
+              checked={task.status === 'COMPLETED'}
+              onCheckedChange={handleStatusChange}
+              aria-label="Mark task as complete"
             />
-          ) : (
-            <span>{task.title}</span>
-          )}
+            {isEditing ? (
+              <Input
+                value={editedTask.title}
+                onChange={(e) => handleChange('title', e.target.value)}
+                className="font-bold"
+              />
+            ) : (
+              <span className={task.status === 'COMPLETED' ? 'line-through' : ''}>{task.title}</span>
+            )}
+          </div>
           {!isEditing && (
             <div className="flex space-x-2">
               <Button variant="ghost" size="icon" onClick={handleEdit}>
@@ -126,9 +138,9 @@ function TaskCard(task: Task) {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="TODO">To Do</SelectItem>
+                <SelectItem value="TO_DO">To Do</SelectItem>
                 <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
-                <SelectItem value="DONE">Done</SelectItem>
+                <SelectItem value="COMPLETED">Done</SelectItem>
               </SelectContent>
             </Select>
             <Select
@@ -177,7 +189,7 @@ function TaskCard(task: Task) {
           <Button variant="outline" onClick={handleCancel}>
             Cancel
           </Button>
-          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={()=>handleSave(editedTask)}>Save</Button>
         </CardFooter>
       )}
     </Card>

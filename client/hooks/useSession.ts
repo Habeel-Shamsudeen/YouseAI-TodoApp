@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useRecoilState } from "recoil";
 import { taskState, userState } from "@/recoil/atoms";
 import axios from "axios";
-import { BACKEND_URL } from "@/lib";
+import { BACKEND_URL } from "@/lib/config";
 
 // Helper to extract token from cookies
 const getTokenFromCookies = () => {
