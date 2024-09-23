@@ -5,7 +5,7 @@ export interface User {
   }
   
   export interface Task {
-    id?: string;
+    id: string;
     title: string;
     description?: string;
     status: Status;

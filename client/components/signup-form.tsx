@@ -14,14 +14,14 @@ export default function SignupForm() {
   const { toast } = useToast();
   const [signupInputs, setSignupInputs] = useState({
     email: "",
-    name:"",
+    name: "",
     password: "",
   });
   const router = useRouter();
 
   const handleSignup = async (event: React.FormEvent) => {
     event.preventDefault();
-    const { email,name, password } = signupInputs;
+    const { email, name, password } = signupInputs;
 
     try {
       const response = await axios.post(`${BACKEND_URL}/api/auth/signup`, {
@@ -64,7 +64,7 @@ export default function SignupForm() {
           </p>
         </div>
         <form className="space-y-2 flex flex-col gap-2" onSubmit={handleSignup}>
-        <div>
+          <div>
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"

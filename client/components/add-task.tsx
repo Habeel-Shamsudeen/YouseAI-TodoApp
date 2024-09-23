@@ -50,7 +50,7 @@ export function AddTaskComponent() {
       return;
     }
     try {
-      const taskData: Task = {
+      const taskData: Omit<Task, 'id'> = {
         title,
         description,
         status,

@@ -44,3 +44,27 @@ export const filteredAndSortedTasksState = selector({
     return sortedTasks;
   },
 });
+
+export const toDoTasksState = selector({
+  key: "toDoTasksState", // Unique key for this selector
+  get: ({ get }) => {
+    const tasks = get(taskState); // Get the task list from atom
+    return tasks.filter(task => task.status === "TO_DO" as Status);
+  },
+});
+
+export const inProgressTasksState = selector({
+  key: "inProgressTasksState", // Unique key for this selector
+  get: ({ get }) => {
+    const tasks = get(taskState); // Get the task list from atom
+    return tasks.filter(task => task.status === "IN_PROGRESS" as Status);
+  },
+});
+
+export const completedTasksState = selector({
+  key: "completedTasksState", // Unique key for this selector
+  get: ({ get }) => {
+    const tasks = get(taskState); // Get the task list from atom
+    return tasks.filter(task => task.status === "COMPLETED" as Status);
+  },
+});

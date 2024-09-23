@@ -45,7 +45,6 @@ const useSession = () => {
         console.error("Session check failed", error);
         setUser(null);
         setTask([]);
-        router.push("/login");
       } finally {
         setLoading(false);
       }

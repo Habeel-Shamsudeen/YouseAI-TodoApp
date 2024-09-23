@@ -32,7 +32,6 @@ export default function SigninForm() {
       if (response.data.token) {
         // Set the token in the cookies
         Cookies.set("token", response.data.token);
-
         toast({
           title: "SignIn Successful",
           description: "You are now logged in!",
