@@ -1,5 +1,4 @@
-'use client'
-
+"use client";
 import { useState } from "react";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -36,12 +35,12 @@ export function AddTaskComponent() {
   const [status, setStatus] = useState<Status>("TO_DO" as Status); // Enforced type
   const [priority, setPriority] = useState<Priority>("LOW" as Priority); // Enforced type
   const [dueDate, setDueDate] = useState<string>(""); // String for input value, will be converted to Date later
-  
+
   const { toast } = useToast();
   const setTodos = useSetRecoilState(taskState);
 
   // Function to handle task creation
-  const onSubmitHandler =async () => {
+  const onSubmitHandler = async () => {
     if (title.length === 0) {
       toast({
         title: "Warning: Empty Title",
@@ -50,18 +49,22 @@ export function AddTaskComponent() {
       return;
     }
     try {
-      const taskData: Omit<Task, 'id'> = {
+      const taskData: Omit<Task, "id"> = {
         title,
         description,
         status,
         priority,
         dueDate: dueDate ? new Date(dueDate) : undefined, // Convert string to Date
       };
-      const response = await axios.post(`${BACKEND_URL}/api/tasks`,{
-        taskData
-      },{
-        withCredentials:true
-      })
+      const response = await axios.post(
+        `${BACKEND_URL}/api/tasks`,
+        {
+          taskData,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       const newTask = response.data.newTask;
       setTodos((prevTodos) => [...prevTodos, newTask]);
       toast({
@@ -71,11 +74,11 @@ export function AddTaskComponent() {
       setTitle("");
       setDescription("");
       setStatus("TO_DO" as Status); // Reset to default
-      setPriority("LOW" as Priority);  // Reset to default
-      setDueDate("");      // Reset date field
+      setPriority("LOW" as Priority); // Reset to default
+      setDueDate(""); // Reset date field
     } catch (error) {
       toast({
-        description: "Something Went Wrong!",
+        description: `Something Went Wrong!:${error}`,
       });
     }
   };
@@ -92,7 +95,8 @@ export function AddTaskComponent() {
         <DialogHeader>
           <DialogTitle>Add a Task</DialogTitle>
           <DialogDescription>
-            Enter the details to add a new task. Click add when you're done.
+            Enter the details to add a new task. Click add when you&apos;re
+            done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -141,7 +145,9 @@ export function AddTaskComponent() {
               Priority
             </Label>
             <Select
-              onValueChange={(value: Priority) => setPriority(value as Priority)} // Ensure Priority type
+              onValueChange={(value: Priority) =>
+                setPriority(value as Priority)
+              } // Ensure Priority type
               defaultValue={priority}
             >
               <SelectTrigger className="col-span-3">

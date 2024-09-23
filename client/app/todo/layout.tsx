@@ -1,7 +1,7 @@
 'use client'
 import Appbar from "@/components/appbarMain";
 import useSession from "@/hooks/useSession";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 
 export default function Layout({
@@ -10,7 +10,6 @@ export default function Layout({
     children: React.ReactNode;
   }>) {
     const {user,loading} = useSession();
-    const router = useRouter()
     if(loading){
       return <div></div>
     }

@@ -18,7 +18,7 @@ import {
   inProgressTasksState,
   toDoTasksState,
 } from "@/recoil/selectors";
-import { Priority, Status, Task } from "@/lib/types";
+import { Status, Task } from "@/lib/types";
 import axios from "axios";
 import { BACKEND_URL } from "@/lib/config";
 import { useToast } from "@/hooks/use-toast";
@@ -74,7 +74,7 @@ export function KanbanBoardComponent() {
         });
       } catch (error) {
         toast({
-          description: "Something Went Wrong!",
+          description: `Something Went Wrong!: ${error}`,
         });
         //revert the optimistic update if the API call fails
         setTasks((prev) => [
@@ -95,12 +95,6 @@ export function KanbanBoardComponent() {
       default:
         return [];
     }
-  };
-
-  const updateTaskList = (status: string, tasks: Task[]) => {
-    setTasks((prev) =>
-      prev.map((t) => (t.status === status ? { ...t, tasks } : t))
-    );
   };
 
   return (

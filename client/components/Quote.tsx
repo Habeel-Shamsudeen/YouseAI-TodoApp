@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from "next/image";
 
 export default function Quote() {
   return (
@@ -14,15 +14,17 @@ export default function Quote() {
       </div>
       <blockquote className="space-y-2">
         <p className="text-2xl font-bold text-slate-800 leading-tight">
-          "The secret of getting ahead is getting started."
+          &quot;The secret of getting ahead is getting started.&quot;
         </p>
         <footer className="mt-4">
           <cite className="flex flex-col not-italic">
-            <span className="text-lg font-semibold text-slate-700">Mark Twain</span>
+            <span className="text-lg font-semibold text-slate-700">
+              Mark Twain
+            </span>
             <span className="text-sm text-slate-500">Author & Humorist</span>
           </cite>
         </footer>
       </blockquote>
     </div>
-  )
+  );
 }

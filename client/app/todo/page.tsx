@@ -6,8 +6,7 @@ import {
   filterStatusState,
   searchTermState,
   sortByState,
-  sortDirectionState,
-  userState,
+  sortDirectionState
 } from "@/recoil/atoms";
 import { filteredAndSortedTasksState } from "@/recoil/selectors";
 import TaskCard from "@/components/task-card";

@@ -70,7 +70,7 @@ export default function SigninForm() {
               type="email"
               placeholder="example@gmail.com"
               required
-              onChange={(e: any) => {
+              onChange={(e) => {
                 setSigninInputs((c) => ({
                   ...c,
                   email: e.target.value,
@@ -97,7 +97,7 @@ export default function SigninForm() {
           </Button>
         </form>
         <div className="text-slate-500 text-center">
-          Don't have an account?
+          <p>Don&apos;t have an account?</p>
           <Link className="pl-1 underline" href={"/signup"}>
             Signup
           </Link>

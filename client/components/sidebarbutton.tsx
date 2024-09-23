@@ -40,7 +40,7 @@ export default function SidebarButton() {
   );
 }
 
-function MenuIcon(props: any) {
+function MenuIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

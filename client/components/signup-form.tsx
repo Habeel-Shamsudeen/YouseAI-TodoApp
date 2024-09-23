@@ -71,7 +71,7 @@ export default function SignupForm() {
               type=""
               placeholder="John Doe"
               required
-              onChange={(e: any) => {
+              onChange={(e) => {
                 setSignupInputs((c) => ({
                   ...c,
                   name: e.target.value,
@@ -86,7 +86,7 @@ export default function SignupForm() {
               type="email"
               placeholder="example@gmail.com"
               required
-              onChange={(e: any) => {
+              onChange={(e) => {
                 setSignupInputs((c) => ({
                   ...c,
                   email: e.target.value,

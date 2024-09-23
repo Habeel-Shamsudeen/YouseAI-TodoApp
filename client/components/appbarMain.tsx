@@ -37,7 +37,7 @@ export default function Appbar({ user }: { user: User }) {
 
   // hook to show toast notification
   const { toast } = useToast();
-  let userName = user.name;
+  const userName = user.name;
   const handleSignOut = async () => {
     try {
       // Call the API to log out-> basically removes the cookie (token)
