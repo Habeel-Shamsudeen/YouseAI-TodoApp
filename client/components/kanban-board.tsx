@@ -25,7 +25,7 @@ import { BACKEND_URL } from "@/lib/config";
 import { useToast } from "@/hooks/use-toast";
 import { getTokenFromCookies } from "@/hooks/useSession";
 
-const priorityColors = {
+export const priorityColors = {
   LOW: "bg-green-100 text-green-800",
   MEDIUM: "bg-yellow-100 text-yellow-800",
   HIGH: "bg-red-100 text-red-800",

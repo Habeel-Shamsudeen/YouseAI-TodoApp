@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CalendarIcon, Pencil, Trash2 } from "lucide-react";
+import { CalendarIcon, FlagIcon, Pencil, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { Priority, Status, Task } from "@/lib/types";
 import { useSetRecoilState } from "recoil";
@@ -27,14 +27,15 @@ import { useToast } from "@/hooks/use-toast";
 import { Checkbox } from "./ui/checkbox";
 import { BACKEND_URL } from "@/lib/config";
 import { getTokenFromCookies } from "@/hooks/useSession";
+import { priorityColors } from "./kanban-board";
+import { Badge } from "./ui/badge";
 
-export default function TaskCard({task}:{task:Task}) {
-  const {toast} = useToast();
+export default function TaskCard({ task }: { task: Task }) {
+  const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
-  const setTasks = useSetRecoilState(taskState)
+  const setTasks = useSetRecoilState(taskState);
   const token = decodeURIComponent(getTokenFromCookies());
-
 
   const handleEdit = () => setIsEditing(true);
   const handleCancel = () => {
@@ -42,17 +43,23 @@ export default function TaskCard({task}:{task:Task}) {
     setEditedTask(task);
   };
 
-  const handleSave = async (editedTask:Task) => {
+  const handleSave = async (editedTask: Task) => {
     try {
-      const response = await axios.put(`${BACKEND_URL}/api/tasks/${editedTask.id}`,editedTask,{
-        withCredentials:true,
-        headers: {
-          Authorization: `${token}`,
-        },
-      });
+      const response = await axios.put(
+        `${BACKEND_URL}/api/tasks/${editedTask.id}`,
+        editedTask,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
       setTasks((prev) =>
         prev.map((task) =>
-          task.id === response.data.updatedTask.id ? response.data.updatedTask : task
+          task.id === response.data.updatedTask.id
+            ? response.data.updatedTask
+            : task
         )
       );
       toast({
@@ -70,8 +77,8 @@ export default function TaskCard({task}:{task:Task}) {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${BACKEND_URL}/api/tasks/${task.id}`,{
-        withCredentials:true,
+      await axios.delete(`${BACKEND_URL}/api/tasks/${task.id}`, {
+        withCredentials: true,
         headers: {
           Authorization: `${token}`,
         },
@@ -90,10 +97,12 @@ export default function TaskCard({task}:{task:Task}) {
   };
 
   const handleStatusChange = (checked: boolean) => {
-    const newStatus: Status = checked ? 'COMPLETED' as Status : 'TO_DO' as Status
-    handleChange('status', newStatus)
-    handleSave({ ...task, status: newStatus })
-  }
+    const newStatus: Status = checked
+      ? ("COMPLETED" as Status)
+      : ("TO_DO" as Status);
+    handleChange("status", newStatus);
+    handleSave({ ...task, status: newStatus });
+  };
 
   const handleChange = (field: keyof Task, value: string | Date) => {
     setEditedTask((prev) => ({ ...prev, [field]: value }));
@@ -103,20 +112,24 @@ export default function TaskCard({task}:{task:Task}) {
     <Card className="w-full max-w-md">
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
-        <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2">
             <Checkbox
-              checked={task.status === 'COMPLETED'}
+              checked={task.status === "COMPLETED"}
               onCheckedChange={handleStatusChange}
               aria-label="Mark task as complete"
             />
             {isEditing ? (
               <Input
                 value={editedTask.title}
-                onChange={(e) => handleChange('title', e.target.value)}
+                onChange={(e) => handleChange("title", e.target.value)}
                 className="font-bold"
               />
             ) : (
-              <span className={task.status === 'COMPLETED' ? 'line-through' : ''}>{task.title}</span>
+              <span
+                className={task.status === "COMPLETED" ? "line-through" : ""}
+              >
+                {task.title}
+              </span>
             )}
           </div>
           {!isEditing && (
@@ -182,8 +195,17 @@ export default function TaskCard({task}:{task:Task}) {
         ) : (
           <>
             <p>{task.description}</p>
-            <p>Status: {task.status}</p>
-            <p>Priority: {task.priority}</p>
+            <p>
+              Priority:{" "}
+              <Badge
+                variant="secondary"
+                className={priorityColors[task.priority]}
+              >
+                <FlagIcon className="w-3 h-3 mr-2" />
+                {task.priority}
+              </Badge>
+            </p>
+            <p>Status: {task.status.replace("_", " ")}</p>
             {task.dueDate && (
               <p className="flex items-center">
                 <CalendarIcon className="mr-2 h-4 w-4" />
@@ -198,7 +220,7 @@ export default function TaskCard({task}:{task:Task}) {
           <Button variant="outline" onClick={handleCancel}>
             Cancel
           </Button>
-          <Button onClick={()=>handleSave(editedTask)}>Save</Button>
+          <Button onClick={() => handleSave(editedTask)}>Save</Button>
         </CardFooter>
       )}
     </Card>
