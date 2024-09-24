@@ -25,6 +25,7 @@ import { useToast } from "@/hooks/use-toast";
 import { BACKEND_URL } from "@/lib/config";
 import axios from "axios";
 import { getTokenFromCookies } from "@/hooks/useSession";
+import Cookies from "js-cookie";
 
 export default function Appbar({ user }: { user: User }) {
   // Reset Recoil states
@@ -53,7 +54,7 @@ export default function Appbar({ user }: { user: User }) {
           },
         } // send cookies with request
       );
-
+      Cookies.remove('token')
       // Reset states in Recoil
       resetUser();
       resetTask();
