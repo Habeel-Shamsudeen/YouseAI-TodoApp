@@ -8,6 +8,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { Card, CardContent } from "@/components/ui/card";
+import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { CalendarIcon, FlagIcon } from "lucide-react";
 import { AddTaskComponent } from "./add-task";
@@ -168,7 +169,7 @@ const Column = ({
                       {task.dueDate && (
                         <Badge variant="outline">
                           <CalendarIcon className="w-3 h-3 mr-1" />
-                          {task.dueDate.toLocaleString()}
+                          {format(new Date(task.dueDate),"yyyy-MM-dd")}
                         </Badge>
                       )}
                     </div>

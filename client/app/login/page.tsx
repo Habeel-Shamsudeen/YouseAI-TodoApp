@@ -9,7 +9,7 @@ export default function SigninHome() {
   const router = useRouter()
     const session = useSession();
     if(session.user){
-        router.push('/todo');
+        router.push('/tasklist');
     }
   return (
     <div>
