@@ -24,6 +24,7 @@ import { User } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
 import { BACKEND_URL } from "@/lib/config";
 import axios from "axios";
+import { getTokenFromCookies } from "@/hooks/useSession";
 
 export default function Appbar({ user }: { user: User }) {
   // Reset Recoil states
@@ -41,10 +42,16 @@ export default function Appbar({ user }: { user: User }) {
   const handleSignOut = async () => {
     try {
       // Call the API to log out-> basically removes the cookie (token)
+      const token = decodeURIComponent(getTokenFromCookies());
       await axios.post(
         `${BACKEND_URL}/api/auth/logout`,
         {},
-        { withCredentials: true } // send cookies with request
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `${token}`,
+          },
+        } // send cookies with request
       );
 
       // Reset states in Recoil

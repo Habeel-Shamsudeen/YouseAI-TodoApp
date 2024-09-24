@@ -5,9 +5,9 @@ import axios from "axios";
 import { BACKEND_URL } from "@/lib/config";
 
 // Helper to extract token from cookies
-const getTokenFromCookies = () => {
-  return document.cookie.split('; ').reduce((acc, cookie) => {
-    const [name, value] = cookie.split('=');
+export const getTokenFromCookies = () => {
+  return document.cookie.split("; ").reduce((acc, cookie) => {
+    const [name, value] = cookie.split("=");
     return name === "token" ? value : acc; // Return the token if found
   }, "");
 };
@@ -19,7 +19,7 @@ const useSession = () => {
 
   useEffect(() => {
     const checkSession = async () => {
-      const token = getTokenFromCookies();
+      const token = decodeURIComponent(getTokenFromCookies());
       if (!token) {
         setUser(null);
         setTask([]);
@@ -30,6 +30,9 @@ const useSession = () => {
       try {
         const response = await axios.get(`${BACKEND_URL}/api/auth/session`, {
           withCredentials: true,
+          headers:{
+            Authorization:`${token}`
+          }
         });
 
         if (response.data.valid) {
@@ -49,7 +52,7 @@ const useSession = () => {
     };
 
     checkSession();
-  }, [setUser, setTask]); 
+  }, [setUser, setTask]);
 
   return { user, tasks, loading };
 };

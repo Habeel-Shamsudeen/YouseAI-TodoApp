@@ -26,12 +26,15 @@ import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 import { Checkbox } from "./ui/checkbox";
 import { BACKEND_URL } from "@/lib/config";
+import { getTokenFromCookies } from "@/hooks/useSession";
 
 export default function TaskCard({task}:{task:Task}) {
   const {toast} = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
   const setTasks = useSetRecoilState(taskState)
+  const token = decodeURIComponent(getTokenFromCookies());
+
 
   const handleEdit = () => setIsEditing(true);
   const handleCancel = () => {
@@ -42,7 +45,10 @@ export default function TaskCard({task}:{task:Task}) {
   const handleSave = async (editedTask:Task) => {
     try {
       const response = await axios.put(`${BACKEND_URL}/api/tasks/${editedTask.id}`,editedTask,{
-        withCredentials:true
+        withCredentials:true,
+        headers: {
+          Authorization: `${token}`,
+        },
       });
       setTasks((prev) =>
         prev.map((task) =>
@@ -65,7 +71,10 @@ export default function TaskCard({task}:{task:Task}) {
   const handleDelete = async () => {
     try {
       await axios.delete(`${BACKEND_URL}/api/tasks/${task.id}`,{
-        withCredentials:true
+        withCredentials:true,
+        headers: {
+          Authorization: `${token}`,
+        },
       });
       setTasks((prev) => prev.filter((stateTask) => stateTask.id !== task.id));
       toast({

@@ -7,19 +7,17 @@ import { DecodedToken } from '../models/types';
 // Middleware to check for JWT token in cookies
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
-    // Check if the cookies exist
-    if (!req.headers.cookie) {
-      return res.status(401).json({ message: 'No cookies Send' });
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: 'No Authorization header provided' });
     }
 
-    // Parse cookies from the request header
-    const cookies = cookie.parse(req.headers.cookie);
-    const brearerToken = cookies.token;
-    if (!brearerToken || !brearerToken.startsWith("Bearer")) {
-      return res.status(401).json({ message: 'Authentication token not found' });
+    const bearerToken = authHeader;
+    if (!bearerToken.startsWith("Bearer ")) {
+      return res.status(401).json({ message: 'Invalid Authorization header format' });
     }
-
-    const token = brearerToken.split(" ")[1];
+  
+    const token = bearerToken.split(" ")[1];
 
     // Verify the token using JWT
     const decoded : DecodedToken = verifyToken(token)

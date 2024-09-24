@@ -27,6 +27,7 @@ import { Priority, Status, Task } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import { BACKEND_URL } from "@/lib/config";
+import { getTokenFromCookies } from "@/hooks/useSession";
 
 export function AddTaskComponent() {
   // State for Task attributes
@@ -56,6 +57,7 @@ export function AddTaskComponent() {
         priority,
         dueDate: dueDate ? new Date(dueDate) : undefined, // Convert string to Date
       };
+      const token = decodeURIComponent(getTokenFromCookies());
       const response = await axios.post(
         `${BACKEND_URL}/api/tasks`,
         {
@@ -63,6 +65,9 @@ export function AddTaskComponent() {
         },
         {
           withCredentials: true,
+          headers:{
+            Authorization:`${token}`
+          }
         }
       );
       const newTask = response.data.newTask;

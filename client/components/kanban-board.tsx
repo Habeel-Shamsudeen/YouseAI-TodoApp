@@ -22,6 +22,7 @@ import { Status, Task } from "@/lib/types";
 import axios from "axios";
 import { BACKEND_URL } from "@/lib/config";
 import { useToast } from "@/hooks/use-toast";
+import { getTokenFromCookies } from "@/hooks/useSession";
 
 const priorityColors = {
   LOW: "bg-green-100 text-green-800",
@@ -56,6 +57,7 @@ export function KanbanBoardComponent() {
       ]);
       try {
         // Update the task status via API
+        const token = decodeURIComponent(getTokenFromCookies());
         const response = await axios.put(
           `${BACKEND_URL}/api/tasks/${removed.id}`,
           {
@@ -64,6 +66,10 @@ export function KanbanBoardComponent() {
           },
           {
             withCredentials: true,
+            headers: {
+              Authorization: `${token}`,
+            },
+
           }
         );
     
