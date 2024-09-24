@@ -38,7 +38,7 @@ export default function SignupForm() {
           description: "You are now logged in!",
         });
 
-        router.push("/todo");
+        router.push("/tasklist");
       } else {
         toast({
           title: "Invalid Credentials",

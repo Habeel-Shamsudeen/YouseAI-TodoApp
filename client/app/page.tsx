@@ -5,7 +5,7 @@ export default function Home() {
   const router = useRouter()
     const session = useSession();
     if(session.user){
-        router.push('/todo');
+        router.push('/tasklist');
     }else{
       router.push('/login');
     }

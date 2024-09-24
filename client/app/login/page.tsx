@@ -16,11 +16,11 @@ export default function SigninHome() {
       <div className="flex">
       <div className="flex items-center gap-2 p-3 md:bg-slate-100 w-1/2 md:shadow-lg">
         <Link
-          href="/#home"
+          href="/"
           className="flex items-center gap-2 "
           prefetch={false}
         >
-          <span className="text-xl font-bold hidden sm:block">YouseAI</span>
+          <span className="text-xl font-bold hidden sm:block">TaskFlow</span>
         </Link>
       </div>
       </div>

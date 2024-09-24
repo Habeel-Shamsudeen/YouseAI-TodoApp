@@ -9,7 +9,7 @@ export default function SignupHome() {
   const router = useRouter()
     const session = useSession();
     if(session.user){
-        router.push('/todo');
+        router.push('/tasklist');
     }
   return (
     <div>
@@ -20,7 +20,7 @@ export default function SignupHome() {
           className="flex items-center gap-2 "
           prefetch={false}
         >
-          <span className="text-xl font-bold hidden sm:block">YouseAI</span>
+          <span className="text-xl font-bold hidden sm:block">TaskFlow</span>
         </Link>
       </div>
       </div>

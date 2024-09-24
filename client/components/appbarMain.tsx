@@ -80,27 +80,27 @@ export default function Appbar({ user }: { user: User }) {
     <header className="bg-background border-b px-4 py-4 flex items-center justify-between shrink-0 md:px-6 md:py-4 shadow-sm bg-black text-slate-50">
       <div className="flex items-center gap-4">
         <Link
-          href={`/todo`}
+          href={`/tasklist`}
           className="flex items-center gap-2 md:hidden"
           prefetch={false}
         >
-          <span className="text-xl font-semibold">YouseAI</span>
+          <span className="text-xl font-semibold">TaskFLow</span>
         </Link>
         <div className="items-center gap-2 hidden md:block">
           <Link
-            href={`/todo`}
+            href={`/tasklist`}
             className="flex items-center gap-2 "
             prefetch={false}
           >
             <ClipboardListIcon className="h-7 w-7" />
-            <span className="text-xl font-bold hidden sm:block">YouseAI</span>
+            <span className="text-xl font-bold hidden sm:block">TaskFlow</span>
           </Link>
         </div>
       </div>
       <div className=" gap-5 hidden md:flex ml-22">
-        <Link href={"/todo"}>
+        <Link href={"/tasklist"}>
           <span className="text-md font-normal hover:text-slate-500">
-            TodoList
+            TaskList
           </span>
         </Link>
         <Link href={"/kanban"}>

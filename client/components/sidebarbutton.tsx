@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ClipboardListIcon } from "./ui/Icons";
 export default function SidebarButton() {
-  const options = ['Todo','Kanban'];
+  const options = ['TaskList','Kanban'];
 
   return (
     <div>
@@ -21,7 +21,7 @@ export default function SidebarButton() {
           <nav className="grid gap-6 text-lg font-medium">
             <Link href="" className="flex items-center gap-2" prefetch={false}>
             <ClipboardListIcon className="h-7 w-7" />
-              <span className="text-lg font-bold">YouseAI</span>
+              <span className="text-lg font-bold">TaskFlow</span>
             </Link>
             {options.map((item) => (
               <Link
